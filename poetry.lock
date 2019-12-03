@@ -7,7 +7,7 @@ python-versions = "*"
 version = "1.4.3"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Atomic file writes."
 marker = "sys_platform == \"win32\""
 name = "atomicwrites"
@@ -16,7 +16,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.3.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Classes Without Boilerplate"
 name = "attrs"
 optional = false
@@ -58,7 +58,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "7.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Cross-platform colored terminal text."
 marker = "sys_platform == \"win32\""
 name = "colorama"
@@ -67,7 +67,18 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.4.1"
 
 [[package]]
-category = "dev"
+category = "main"
+description = "Code coverage measurement for Python"
+name = "coverage"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+version = "5.0b1"
+
+[package.extras]
+toml = ["toml"]
+
+[[package]]
+category = "main"
 description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
 optional = false
@@ -75,7 +86,7 @@ python-versions = ">=3.5"
 version = "8.0.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
@@ -95,7 +106,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.6.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "plugin and hook calling mechanisms for python"
 name = "pluggy"
 optional = false
@@ -106,7 +117,7 @@ version = "0.13.1"
 dev = ["pre-commit", "tox"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
 optional = false
@@ -114,7 +125,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.8.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python parsing module"
 name = "pyparsing"
 optional = false
@@ -122,7 +133,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.5"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
@@ -143,6 +154,21 @@ wcwidth = "*"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
+category = "main"
+description = "Pytest plugin for measuring coverage."
+name = "pytest-cov"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "2.8.1"
+
+[package.dependencies]
+coverage = ">=4.4"
+pytest = ">=3.6"
+
+[package.extras]
+testing = ["fields", "hunter", "process-tests (2.0.2)", "six", "virtualenv"]
+
+[[package]]
 category = "dev"
 description = "Alternative regular expression module, to replace re."
 name = "regex"
@@ -151,7 +177,7 @@ python-versions = "*"
 version = "2019.11.1"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
@@ -175,7 +201,7 @@ python-versions = "*"
 version = "1.4.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Measures number of Terminal column cells of wide-character codes"
 name = "wcwidth"
 optional = false
@@ -183,7 +209,7 @@ python-versions = "*"
 version = "0.1.7"
 
 [metadata]
-content-hash = "6ff784156361b767168c03c730155362444290d33cf0739b20d4ccbad730dc8e"
+content-hash = "b61e56ec43fa3cb6eb74daf4077cf08e8330452b25b0bccda024ba532a505817"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -211,6 +237,37 @@ colorama = [
     {file = "colorama-0.4.1-py2.py3-none-any.whl", hash = "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"},
     {file = "colorama-0.4.1.tar.gz", hash = "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d"},
 ]
+coverage = [
+    {file = "coverage-5.0b1-cp27-cp27m-macosx_10_12_x86_64.whl", hash = "sha256:8210a6f93c4a8c6d460b402e20e38399529b99200c3318542faf6a520c9b6a5c"},
+    {file = "coverage-5.0b1-cp27-cp27m-macosx_10_13_intel.whl", hash = "sha256:2358e685d0253125da42a48396038d4c7b4cd1448c00bbc4bda0cb8c43c2a870"},
+    {file = "coverage-5.0b1-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:5ffb39624bc573177888a21fb301ccee46838c600b27d58c3e9dae495f44d34a"},
+    {file = "coverage-5.0b1-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:79ef4a2bb862110bd585174e551a783bee5c3aa461734a2ac7429193be357589"},
+    {file = "coverage-5.0b1-cp27-cp27m-win32.whl", hash = "sha256:50cf23523ab3a724c6905d3b60f87fa8250d9bae3995e09f49f63effa2b54f15"},
+    {file = "coverage-5.0b1-cp27-cp27m-win_amd64.whl", hash = "sha256:f7162f2e3711f3a08a8a741f92e1f63afd58d0713177979f2cf9723dd50161cf"},
+    {file = "coverage-5.0b1-cp27-cp27mu-manylinux1_i686.whl", hash = "sha256:699b3072b7f0e69ed175a88fa8b2ec7eefc4f34d490c54ed9a52feff21a15fdc"},
+    {file = "coverage-5.0b1-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:aedad67c30326a1af324f45833a40b97180664912deb29942459ddbe9fa0ce19"},
+    {file = "coverage-5.0b1-cp35-cp35m-macosx_10_12_x86_64.whl", hash = "sha256:25017cf384eeed2e6caf72efd3ec4124e32a8b7a4387600499104387975400c7"},
+    {file = "coverage-5.0b1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:54c84a68abd8c4c5b71878b35eb85321df41f3d144c78181867d5b026ec74994"},
+    {file = "coverage-5.0b1-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:c0df57e189dacd2606cae6386acf127d01d85b2bf49acd9a65543b5d6c359ddc"},
+    {file = "coverage-5.0b1-cp35-cp35m-win32.whl", hash = "sha256:2e2de9423ff8b14303a97eafddd16c479fbcc9a0b8b0be3b7c3843a3e0cf6d69"},
+    {file = "coverage-5.0b1-cp35-cp35m-win_amd64.whl", hash = "sha256:97ac79ff28f2cda6ac00a803ee582b965951755f61ab43377482bfba450b619a"},
+    {file = "coverage-5.0b1-cp36-cp36m-macosx_10_13_x86_64.whl", hash = "sha256:5b59d661ee7f3200aedd7b71882b7927ea7ed522df75e3853f316a79ad872a2e"},
+    {file = "coverage-5.0b1-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:a5b6395d5957d638f8b1870561607e3c39b1a236ea6cff9eafe5b9bb1db913f2"},
+    {file = "coverage-5.0b1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:324ed908e4e40a6e2451056fe502470ad4e79495cb7a03ecab94e6309c3e117e"},
+    {file = "coverage-5.0b1-cp36-cp36m-win32.whl", hash = "sha256:8d30c10cfd0a6fdf0a2d5023de00ef7b329cd6ead2310c9e53eab79c209acb70"},
+    {file = "coverage-5.0b1-cp36-cp36m-win_amd64.whl", hash = "sha256:e9128444c83bc260aea988bf1ca6278a33ba730955bf94720468c656b61353eb"},
+    {file = "coverage-5.0b1-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:b077cd0e70f41366ac1f9d09275258fa1906758a5d4f31cacc18b10dfcf90784"},
+    {file = "coverage-5.0b1-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:ad67f0cfdfecbd49b9da46a7e488e6dc32a69388740b85c36a4ef4b33082cbad"},
+    {file = "coverage-5.0b1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:ab32c5fad6905986a7e34e3acf01180a69bb60c2aa7331815b46e51c776a1943"},
+    {file = "coverage-5.0b1-cp37-cp37m-win32.whl", hash = "sha256:e10593c60c5f0bfd8b241bf9f27ef2191a3005b73dde8ada0424f642543a1e59"},
+    {file = "coverage-5.0b1-cp37-cp37m-win_amd64.whl", hash = "sha256:9fe4aacacff9028ed167db108bf013510654f148d83c4857fed61d2ce0588bf2"},
+    {file = "coverage-5.0b1-cp38-cp38-macosx_10_13_x86_64.whl", hash = "sha256:bf572722326ce6704e863447a070039a827072b7179352570859be899b9e6551"},
+    {file = "coverage-5.0b1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:34f865a0cf6255b694a46e4383a7131c61ea72c5b4c4f81d20e522fb1e440b4b"},
+    {file = "coverage-5.0b1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:3a2bcc464b60a18f1f7167b95b2773ede93bf3722bfa59e0802717f652b6cc25"},
+    {file = "coverage-5.0b1-cp38-cp38m-win32.whl", hash = "sha256:48d70865266d649b6602e2ba94820d7972ef470d3b72a8fd41a3d17321feed3a"},
+    {file = "coverage-5.0b1-cp38-cp38m-win_amd64.whl", hash = "sha256:b8ea210810d3c14aec7561f8fe0d3eec582d1088100aaa0bb8153d53d867d20f"},
+    {file = "coverage-5.0b1.tar.gz", hash = "sha256:d523e75f2a8a0b4a6a8be1287c0e0e3a561b8832b05ddd987d4cd7c62f3ad3bc"},
+]
 more-itertools = [
     {file = "more-itertools-8.0.0.tar.gz", hash = "sha256:53ff73f186307d9c8ef17a9600309154a6ae27f25579e80af4db8f047ba14bc2"},
     {file = "more_itertools-8.0.0-py3-none-any.whl", hash = "sha256:a0ea684c39bc4315ba7aae406596ef191fd84f873d2d2751f84d64e81a7a2d45"},
@@ -237,6 +294,10 @@ pyparsing = [
 pytest = [
     {file = "pytest-5.3.1-py3-none-any.whl", hash = "sha256:63344a2e3bce2e4d522fd62b4fdebb647c019f1f9e4ca075debbd13219db4418"},
     {file = "pytest-5.3.1.tar.gz", hash = "sha256:f67403f33b2b1d25a6756184077394167fe5e2f9d8bdaab30707d19ccec35427"},
+]
+pytest-cov = [
+    {file = "pytest-cov-2.8.1.tar.gz", hash = "sha256:cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b"},
+    {file = "pytest_cov-2.8.1-py2.py3-none-any.whl", hash = "sha256:cdbdef4f870408ebdbfeb44e63e07eb18bb4619fae852f6e760645fa36172626"},
 ]
 regex = [
     {file = "regex-2019.11.1-cp27-none-win32.whl", hash = "sha256:604dc563a02a74d70ae1f55208ddc9bfb6d9f470f6d1a5054c4bd5ae58744ab1"},
