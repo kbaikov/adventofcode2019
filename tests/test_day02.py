@@ -5,7 +5,7 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from day02 import add, mult, process_tape
+from day02 import add, mult, process_tape, process_tape_with_parameters
 
 
 @pytest.mark.parametrize(
@@ -50,3 +50,9 @@ def test_mult(tape, instruction_pointer, result):
 )
 def test_process_tape(tape, result):
     assert result == process_tape(tape)
+
+
+def test_process_tape_with_parameters():
+    with open("day02_input.txt") as f:
+        tape = [int(x) for x in f.readline().split(",")]
+    assert 2552 == process_tape_with_parameters(tape, 19690720)
