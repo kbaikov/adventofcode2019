@@ -1,4 +1,19 @@
 [[package]]
+category = "main"
+description = "Powerful and Lightweight Python Tree Data Structure.."
+name = "anytree"
+optional = false
+python-versions = "*"
+version = "2.7.2"
+
+[package.dependencies]
+six = ">=1.9.0"
+
+[package.extras]
+dev = ["check-manifest"]
+test = ["coverage"]
+
+[[package]]
 category = "dev"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 name = "appdirs"
@@ -209,10 +224,13 @@ python-versions = "*"
 version = "0.1.7"
 
 [metadata]
-content-hash = "b61e56ec43fa3cb6eb74daf4077cf08e8330452b25b0bccda024ba532a505817"
+content-hash = "e89c2d713a17bf870a4f30dceacd2474cc4cfe992a8f7870e2aac1089b942dc8"
 python-versions = "^3.8"
 
 [metadata.files]
+anytree = [
+    {file = "anytree-2.7.2.tar.gz", hash = "sha256:6692679795c7a2ef877c01b0d5131f2c08945ef21445c082d55f08b07d1b41f3"},
+]
 appdirs = [
     {file = "appdirs-1.4.3-py2.py3-none-any.whl", hash = "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"},
     {file = "appdirs-1.4.3.tar.gz", hash = "sha256:9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92"},

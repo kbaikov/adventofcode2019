@@ -7,6 +7,7 @@ authors = ["Konstantin Baikov <konstantin.baikov.ext@siemens-healthineers.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 pytest-cov = "^2.8.1"
+anytree = "^2.7.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.1"
