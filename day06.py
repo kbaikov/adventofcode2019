@@ -1,9 +1,9 @@
-from anytree import Node, RenderTree
+from anytree import Node, RenderTree, Walker
 
 # import logging
 
 # logging.basicConfig(
-#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("asdf.log")]
+#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
 # )
 
 # log = logging.getLogger(__name__)
@@ -12,11 +12,11 @@ from anytree import Node, RenderTree
 def parse_tree(input_list):
     """Process string and return the anytree object"""
     for pair in input_list.copy():
-        left, _, right = pair.partition(")")
+        left, _, right = pair.rstrip().partition(")")
         globals()[left] = Node(left)
         globals()[right] = Node(right)
     for pair in input_list.copy():
-        left, _, right = pair.partition(")")
+        left, _, right = pair.rstrip().partition(")")
         globals()[right].parent = globals()[left]
     return globals()
 
@@ -28,11 +28,22 @@ def part1(tree_root):
     return depth
 
 
+def part2(node1, node2):
+    w = Walker()
+    upwards, common, downwards = w.walk(node1, node2)
+
+    # minus 2 since you to parent and san to parent transfers ommited
+    return len(upwards) + len(downwards) - 2
+
+
 if __name__ == "__main__":
 
     with open("day06_input.txt") as f:
-        tree = parse_tree(f.readlines())
+        tree = f.readlines()
 
     parse_tree(tree)
-    print(part1(HQT.root))
+    root = globals()["YOU"].root
+    print(dir(root))
+    print(part1(root))  # 273985
+    print(part2(globals()["YOU"], globals()["SAN"]))  # 460
 
