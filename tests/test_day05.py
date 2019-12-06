@@ -63,7 +63,7 @@ def test_mult(tape, instruction_pointer, result):
     ],
 )
 def test_input_(tape, instruction_pointer, result):
-    assert result == input_(tape, instruction_pointer)
+    assert result == input_(tape, instruction_pointer, 1)
 
 
 @pytest.mark.parametrize(
@@ -141,5 +141,5 @@ def test_parse_opcode(opcode, initial_register, result_register):
     ],
 )
 def test_process_tape(tape, result):
-    assert result == process_tape(tape)
+    assert result == process_tape(tape, 1)
 

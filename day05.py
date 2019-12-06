@@ -49,8 +49,10 @@ def jump_if_true(tape, register):
     input1 = input1 if register["parameter1_mode"] else tape[input1]
     input2 = tape[instruction_pointer + 2]
     input2 = input2 if register["parameter2_mode"] else tape[input2]
-    if input1 != 0:
+    if input1:
         register["instruction_pointer"] = input2
+    else:
+        register["instruction_pointer"] += 3
     return register
 
 
@@ -60,8 +62,10 @@ def jump_if_false(tape, register):
     input1 = input1 if register["parameter1_mode"] else tape[input1]
     input2 = tape[instruction_pointer + 2]
     input2 = input2 if register["parameter2_mode"] else tape[input2]
-    if input1 == 0:
+    if not input1:
         register["instruction_pointer"] = input2
+    else:
+        register["instruction_pointer"] += 3
     return register
 
 
@@ -97,9 +101,7 @@ def parse_opcode(opcode_number, register):
     """Parse the opcode_number and update the register accordingly"""
     params, _, opcode = str(opcode_number).rpartition("0")
     register["opcode"] = int(str(opcode_number)[-2:])
-    register["parameter1_mode"] = register["parameter2_mode"] = register[
-        "parameter3_mode"
-    ] = 0
+    register["parameter1_mode"] = register["parameter2_mode"] = register["parameter3_mode"] = 0
     if params:
         register["parameter1_mode"] = int(params[-1])
         try:
@@ -115,11 +117,7 @@ def parse_opcode(opcode_number, register):
 
 def process_tape(tape, input_value):
     register = dict(
-        instruction_pointer=0,
-        opcode=0,
-        parameter1_mode=0,
-        parameter2_mode=0,
-        parameter3_mode=0,
+        instruction_pointer=0, opcode=0, parameter1_mode=0, parameter2_mode=0, parameter3_mode=0,
     )
     while True:
 
@@ -156,5 +154,6 @@ if __name__ == "__main__":
         original_tape = [int(x) for x in f.readline().split(",")]
     tape = original_tape.copy()
     process_tape(tape, 1)  # 9961446
-    process_tape(tape, 5)  #
+    tape = original_tape.copy()
+    process_tape(tape, 5)  # 742621
 
