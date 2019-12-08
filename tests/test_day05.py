@@ -24,7 +24,7 @@ register4 = dict(
 
 
 @pytest.mark.parametrize(
-    "tape, instruction_pointer, result",
+    "tape, register, result",
     [
         ([1, 0, 0, 0, 99], register, [2, 0, 0, 0, 99]),
         (
@@ -34,12 +34,12 @@ register4 = dict(
         ),
     ],
 )
-def test_add(tape, instruction_pointer, result):
-    assert result == add(tape, instruction_pointer)
+def test_add(tape, register, result):
+    assert result, _ == add(tape, register)
 
 
 @pytest.mark.parametrize(
-    "tape, instruction_pointer, result",
+    "tape, register, result",
     [
         ([2, 3, 0, 3, 99], register, [2, 3, 0, 6, 99]),
         ([2, 4, 4, 5, 99, 0], register, [2, 4, 4, 5, 99, 9801]),
@@ -50,12 +50,12 @@ def test_add(tape, instruction_pointer, result):
         ),
     ],
 )
-def test_mult(tape, instruction_pointer, result):
-    assert result == mult(tape, instruction_pointer)
+def test_mult(tape, register, result):
+    assert result, _ == mult(tape, register)
 
 
 @pytest.mark.parametrize(
-    "tape, instruction_pointer, result",
+    "tape, register, result",
     [
         (
             [3, 0, 0, 3, 99],
@@ -70,12 +70,12 @@ def test_mult(tape, instruction_pointer, result):
         ),
     ],
 )
-def test_input_(tape, instruction_pointer, result):
-    assert result == input_(tape, instruction_pointer, 1)
+def test_input_(tape, register, result):
+    assert result, _ == input_(tape, register, 1)
 
 
 @pytest.mark.parametrize(
-    "tape, instruction_pointer, result",
+    "tape, register, result",
     [
         (
             [4, 3, 0, 3, 99],
@@ -101,8 +101,8 @@ def test_input_(tape, instruction_pointer, result):
         ),
     ],
 )
-def test_output_(tape, instruction_pointer, result):
-    assert result == output_(tape, instruction_pointer)
+def test_output_(tape, register, result):
+    assert result == output_(tape, register)
 
 
 @pytest.mark.parametrize(

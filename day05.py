@@ -15,7 +15,8 @@ def add(tape, register):
     input2 = input2 if register["parameter2_mode"] else tape[input2]
     output = tape[instruction_pointer + 3]
     tape[output] = input1 + input2
-    return tape
+    register["instruction_pointer"] += 4
+    return tape, register
 
 
 def mult(tape, register):
@@ -26,14 +27,16 @@ def mult(tape, register):
     input2 = input2 if register["parameter2_mode"] else tape[input2]
     output = tape[instruction_pointer + 3]
     tape[output] = input1 * input2
-    return tape
+    register["instruction_pointer"] += 4
+    return tape, register
 
 
 def input_(tape, register, input_value):
     instruction_pointer = register["instruction_pointer"]
     input_value_position = tape[instruction_pointer + 1]
     tape[input_value_position] = input_value
-    return tape
+    register["instruction_pointer"] += 2
+    return tape, register
 
 
 def output_(tape, register):
@@ -53,7 +56,7 @@ def jump_if_true(tape, register):
         register["instruction_pointer"] = input2
     else:
         register["instruction_pointer"] += 3
-    return register
+    return tape, register
 
 
 def jump_if_false(tape, register):
@@ -66,7 +69,7 @@ def jump_if_false(tape, register):
         register["instruction_pointer"] = input2
     else:
         register["instruction_pointer"] += 3
-    return register
+    return tape, register
 
 
 def less_than(tape, register):
@@ -80,7 +83,8 @@ def less_than(tape, register):
         tape[output] = 1
     else:
         tape[output] = 0
-    return tape
+    register["instruction_pointer"] += 4
+    return tape, register
 
 
 def equals(tape, register):
@@ -94,7 +98,8 @@ def equals(tape, register):
         tape[output] = 1
     else:
         tape[output] = 0
-    return tape
+    register["instruction_pointer"] += 4
+    return tape, register
 
 
 def parse_opcode(opcode_number, register):
@@ -117,6 +122,19 @@ def parse_opcode(opcode_number, register):
     return register
 
 
+operation = {
+    99: "return",
+    1: add,
+    2: mult,
+    3: input_,
+    4: output_,
+    5: jump_if_true,
+    6: jump_if_false,
+    7: less_than,
+    8: equals,
+}
+
+
 def process_tape(tape, input_value):
     register = dict(
         instruction_pointer=0,
@@ -131,27 +149,22 @@ def process_tape(tape, input_value):
         if register["opcode"] == 99:
             return tape
         elif register["opcode"] == 1:
-            tape = add(tape, register)
-            register["instruction_pointer"] += 4
+            tape, register = add(tape, register)
         elif register["opcode"] == 2:
-            tape = mult(tape, register)
-            register["instruction_pointer"] += 4
+            tape, register = mult(tape, register)
         elif register["opcode"] == 3:
-            tape = input_(tape, register, input_value)
-            register["instruction_pointer"] += 2
+            tape, register = input_(tape, register, input_value)
         elif register["opcode"] == 4:
             print(output_(tape, register))
             register["instruction_pointer"] += 2
         elif register["opcode"] == 5:
-            register = jump_if_true(tape, register)
+            tape, register = jump_if_true(tape, register)
         elif register["opcode"] == 6:
-            register = jump_if_false(tape, register)
+            tape, register = jump_if_false(tape, register)
         elif register["opcode"] == 7:
-            tape = less_than(tape, register)
-            register["instruction_pointer"] += 4
+            tape, register = less_than(tape, register)
         elif register["opcode"] == 8:
-            tape = equals(tape, register)
-            register["instruction_pointer"] += 4
+            tape, register = equals(tape, register)
 
 
 if __name__ == "__main__":
