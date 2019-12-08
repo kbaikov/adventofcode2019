@@ -13,6 +13,8 @@ register = dict(
     parameter1_mode=0,
     parameter2_mode=0,
     parameter3_mode=0,
+    input=0,
+    output=0,
 )
 register4 = dict(
     instruction_pointer=4,
@@ -20,6 +22,8 @@ register4 = dict(
     parameter1_mode=0,
     parameter2_mode=0,
     parameter3_mode=0,
+    input=0,
+    output=0,
 )
 
 
@@ -118,6 +122,8 @@ def test_output_(tape, register, result):
                 parameter1_mode=0,
                 parameter2_mode=1,
                 parameter3_mode=0,
+                input=0,
+                output=0,
             ),
         ),
         (
@@ -129,6 +135,8 @@ def test_output_(tape, register, result):
                 parameter1_mode=1,
                 parameter2_mode=1,
                 parameter3_mode=1,
+                input=0,
+                output=0,
             ),
         ),
         (
