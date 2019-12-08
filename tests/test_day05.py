@@ -102,7 +102,8 @@ def test_input_(tape, register, result):
     ],
 )
 def test_output_(tape, register, result):
-    assert result == output_(tape, register)
+    t, r = output_(tape, register)
+    assert r["output"] == result
 
 
 @pytest.mark.parametrize(
@@ -164,5 +165,6 @@ def test_parse_opcode(opcode, initial_register, result_register):
     ],
 )
 def test_process_tape(tape, result):
-    assert result == process_tape(tape, 1)
+    t, r = process_tape(tape, 1)
+    assert t == result
 

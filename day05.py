@@ -43,7 +43,9 @@ def output_(tape, register):
     instruction_pointer = register["instruction_pointer"]
     output = tape[instruction_pointer + 1]
     output = output if register["parameter1_mode"] else tape[output]
-    return output
+    register["instruction_pointer"] += 2
+    register["output"] = output
+    return tape, register
 
 
 def jump_if_true(tape, register):
@@ -142,12 +144,13 @@ def process_tape(tape, input_value):
         parameter1_mode=0,
         parameter2_mode=0,
         parameter3_mode=0,
+        output=0,
     )
     while True:
 
         parse_opcode(tape[register["instruction_pointer"]], register)
         if register["opcode"] == 99:
-            return tape
+            return tape, register
         elif register["opcode"] == 1:
             tape, register = add(tape, register)
         elif register["opcode"] == 2:
@@ -155,8 +158,7 @@ def process_tape(tape, input_value):
         elif register["opcode"] == 3:
             tape, register = input_(tape, register, input_value)
         elif register["opcode"] == 4:
-            print(output_(tape, register))
-            register["instruction_pointer"] += 2
+            tape, register = output_(tape, register)
         elif register["opcode"] == 5:
             tape, register = jump_if_true(tape, register)
         elif register["opcode"] == 6:
@@ -172,7 +174,9 @@ if __name__ == "__main__":
     with open("day05_input.txt") as f:
         original_tape = [int(x) for x in f.readline().split(",")]
     tape = original_tape.copy()
-    process_tape(tape, 1)  # 9961446
+    t, r = process_tape(tape, 1)
+    print(r["output"])  # 9961446
     tape = original_tape.copy()
-    process_tape(tape, 5)  # 742621
+    t, r = process_tape(tape, 5)
+    print(r["output"])  # 742621
 
