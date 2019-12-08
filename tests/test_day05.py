@@ -8,10 +8,18 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from day05 import add, mult, input_, output_, parse_opcode, process_tape
 
 register = dict(
-    instruction_pointer=0, opcode=0, parameter1_mode=0, parameter2_mode=0, parameter3_mode=0,
+    instruction_pointer=0,
+    opcode=0,
+    parameter1_mode=0,
+    parameter2_mode=0,
+    parameter3_mode=0,
 )
 register4 = dict(
-    instruction_pointer=4, opcode=0, parameter1_mode=0, parameter2_mode=0, parameter3_mode=0,
+    instruction_pointer=4,
+    opcode=0,
+    parameter1_mode=0,
+    parameter2_mode=0,
+    parameter3_mode=0,
 )
 
 
@@ -69,17 +77,32 @@ def test_input_(tape, instruction_pointer, result):
 @pytest.mark.parametrize(
     "tape, instruction_pointer, result",
     [
-        ([2, 3, 0, 3, 99], 0, [2, 3, 0, 6, 99]),
-        ([2, 4, 4, 5, 99, 0], 0, [2, 4, 4, 5, 99, 9801]),
         (
-            [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
-            4,
-            [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
+            [4, 3, 0, 3, 99],
+            dict(
+                instruction_pointer=0,
+                opcode=0,
+                parameter1_mode=0,
+                parameter2_mode=0,
+                parameter3_mode=0,
+            ),
+            3,
+        ),
+        (
+            [4, 4, 4, 5, 99, 0],
+            dict(
+                instruction_pointer=0,
+                opcode=0,
+                parameter1_mode=0,
+                parameter2_mode=0,
+                parameter3_mode=0,
+            ),
+            99,
         ),
     ],
 )
 def test_output_(tape, instruction_pointer, result):
-    pass
+    assert result == output_(tape, instruction_pointer)
 
 
 @pytest.mark.parametrize(
