@@ -168,7 +168,13 @@ def process_tape(tape, input_value):
 if __name__ == "__main__":
 
     with open("day05_input.txt") as f:
-        original_tape = [int(x) for x in f.readline().split(",")]
+        original_list = [int(x) for x in f.readline().split(",")]
+
+    # convert tape from list to default dict
+    original_tape = defaultdict(int)
+    for k, v in enumerate(original_list):
+        original_tape[k] = v
+
     tape = original_tape.copy()
     t, r = process_tape(tape, 1)
     log.info("Final output: %s", r["output"])  # 9961446
