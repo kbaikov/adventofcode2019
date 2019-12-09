@@ -1,25 +1,27 @@
-# import logging
+import sys
+import os
 
-# logging.basicConfig(
-#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
-# )
-
-# log = logging.getLogger(__name__)
+import pytest
 import numpy as np
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-def part1(array):
-    array = array.reshape(-1, 6, 25)
+
+from day08 import part1
+
+
+def test_example():
+    array = np.fromiter("123456789012", dtype=np.int)
+    array = array.reshape(-1, 2, 3)
     number_of_zeros_per_layer = np.sum(np.count_nonzero(array == 0, axis=1), axis=1)
     fewest_zeros_index = np.argmin(number_of_zeros_per_layer)
     number_of_1_digits = np.sum(array[fewest_zeros_index] == 1)
     number_of_2_digits = np.sum(array[fewest_zeros_index] == 2)
-    return number_of_1_digits * number_of_2_digits
+    assert number_of_1_digits * number_of_2_digits == 1
 
 
-if __name__ == "__main__":
-
+def test_part1():
     with open("day08_input.txt") as f:
         array = np.fromiter(f.readline().rstrip(), dtype=np.int)
+    assert part1(array) == 1206
 
-    print(part1(array))  # 1206
