@@ -1,36 +1,40 @@
-# import logging
+import logging
+from collections import defaultdict
 
-# logging.basicConfig(
-#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
-# )
+logging.basicConfig(
+    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
+)
 
-# log = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
-from itertools import permutations
 
 from day05 import (
     add,
     mult,
     output_,
+    input_,
     jump_if_true,
     jump_if_false,
     less_than,
     equals,
     parse_opcode,
+    parse_parameters,
 )
 
 
-def input_(tape, register):
-    instruction_pointer = register["instruction_pointer"]
-    input_value_position = tape[instruction_pointer + 1]
-    tape[input_value_position] = register["input_list"].pop()
-    register["instruction_pointer"] += 2
-    return tape, register
-
-
 def adjust_base(tape, register):
+    """Opcode 9 adjusts the relative base by the value of its only parameter.
+    The relative base increases (or decreases, if the value is negative)
+    by the value of the parameter."""
     instruction_pointer = register["instruction_pointer"]
+    relative_base = register["relative_base"]
     input1 = tape[instruction_pointer + 1]
+
+    if register["parameter1_mode"] == 0:
+        input1 = tape[input1]
+    elif register["parameter1_mode"] == 2:
+        input1 = tape[input1 + relative_base]
+
     register["relative_base"] += input1
     register["instruction_pointer"] += 2
     return tape, register
@@ -57,6 +61,7 @@ def process_tape(tape, input_list):
         parameter2_mode=0,
         parameter3_mode=0,
         input_list=input_list,
+        input=1,
         output=0,
         relative_base=0,
     )
@@ -77,16 +82,15 @@ def part1():
 if __name__ == "__main__":
 
     with open("day09_input.txt") as f:
-        original_tape = [int(x) for x in f.readline().split(",")]
+        original_list = [int(x) for x in f.readline().split(",")]
 
-    max_signal = dict()
-    for permutation in permutations(range(5), 5):
-        tape = original_tape.copy()
-        signal = 0
-        for phase in permutation:
-            input_list = [signal, phase]  # input signal, phase
-            t, r = process_tape(tape, input_list)
-            signal = r["output"]
-        max_signal[permutation] = signal
-    max_key_by_value = sorted(max_signal.items(), key=lambda x: x[1])
-    print(max_key_by_value[-1])  # ((2, 1, 3, 4, 0), 199988)
+    # convert tape from list to default dict
+    original_tape = defaultdict(int)
+    for k, v in enumerate(original_list):
+        original_tape[k] = v
+
+    tape = original_tape.copy()
+    t, r = process_tape(tape, [1])
+    log.info("Final output: %s", r["output"])  #
+    # log.info("Final tape: %s", t)  #
+    log.info("Final register: %s", r)  #

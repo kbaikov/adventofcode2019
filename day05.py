@@ -64,7 +64,7 @@ def output_(tape, register):
     # output = output if register["parameter1_mode"] else tape[output]
     register["output"] = output
     register["instruction_pointer"] += 2
-    log.debug("Ouput: %s", output)
+    log.debug("Output: %s", output)
     return tape, register
 
 

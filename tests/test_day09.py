@@ -1,11 +1,19 @@
 import sys
 import os
+import logging
+from collections import defaultdict
+
+logging.basicConfig(
+    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
+)
+
+log = logging.getLogger(__name__)
 
 import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from day09 import add, mult, input_, output_, parse_opcode, process_tape
+from day09 import add, mult, input_, output_, parse_opcode, process_tape, adjust_base
 
 register = dict(
     instruction_pointer=0,
@@ -15,6 +23,7 @@ register = dict(
     parameter3_mode=0,
     input=0,
     output=0,
+    relative_base=0,
 )
 register4 = dict(
     instruction_pointer=4,
@@ -24,155 +33,39 @@ register4 = dict(
     parameter3_mode=0,
     input=0,
     output=0,
+    relative_base=-1,
 )
+
+
+def list_to_defaultdict(l):
+    d = defaultdict(int)
+    for k, v in enumerate(l):
+        d[k] = v
+    return d
 
 
 @pytest.mark.parametrize(
-    "tape, register, result",
-    [
-        ([1, 0, 0, 0, 99], register, [2, 0, 0, 0, 99]),
-        (
-            [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
-            register,
-            [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
-        ),
-    ],
+    "tape, result", [([109, 19], 19),],
 )
-def test_add(tape, register, result):
-    assert result, _ == add(tape, register)
-
-
-@pytest.mark.parametrize(
-    "tape, register, result",
-    [
-        ([2, 3, 0, 3, 99], register, [2, 3, 0, 6, 99]),
-        ([2, 4, 4, 5, 99, 0], register, [2, 4, 4, 5, 99, 9801]),
-        (
-            [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
-            register4,
-            [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
-        ),
-    ],
-)
-def test_mult(tape, register, result):
-    assert result, _ == mult(tape, register)
-
-
-@pytest.mark.parametrize(
-    "tape, register, result",
-    [
-        (
-            [3, 0, 0, 3, 99],
-            dict(
-                instruction_pointer=0,
-                opcode=0,
-                parameter1_mode=0,
-                parameter2_mode=0,
-                parameter3_mode=0,
-            ),
-            [1, 0, 0, 3, 99],
-        ),
-    ],
-)
-def test_input_(tape, register, result):
-    assert result, _ == input_(tape, register, 1)
-
-
-@pytest.mark.parametrize(
-    "tape, register, result",
-    [
-        (
-            [4, 3, 0, 3, 99],
-            dict(
-                instruction_pointer=0,
-                opcode=0,
-                parameter1_mode=0,
-                parameter2_mode=0,
-                parameter3_mode=0,
-            ),
-            3,
-        ),
-        (
-            [4, 4, 4, 5, 99, 0],
-            dict(
-                instruction_pointer=0,
-                opcode=0,
-                parameter1_mode=0,
-                parameter2_mode=0,
-                parameter3_mode=0,
-            ),
-            99,
-        ),
-    ],
-)
-def test_output_(tape, register, result):
-    t, r = output_(tape, register)
-    assert r["output"] == result
-
-
-@pytest.mark.parametrize(
-    "opcode, initial_register, result_register",
-    [
-        (
-            1002,
-            register,
-            dict(
-                instruction_pointer=0,
-                opcode=2,
-                parameter1_mode=0,
-                parameter2_mode=1,
-                parameter3_mode=0,
-                input=0,
-                output=0,
-            ),
-        ),
-        (
-            11101,
-            register,
-            dict(
-                instruction_pointer=0,
-                opcode=1,
-                parameter1_mode=1,
-                parameter2_mode=1,
-                parameter3_mode=1,
-                input=0,
-                output=0,
-            ),
-        ),
-        (
-            2,
-            dict(
-                instruction_pointer=0,
-                opcode=0,
-                parameter1_mode=0,
-                parameter2_mode=0,
-                parameter3_mode=0,
-            ),
-            dict(
-                instruction_pointer=0,
-                opcode=2,
-                parameter1_mode=0,
-                parameter2_mode=0,
-                parameter3_mode=0,
-            ),
-        ),
-    ],
-)
-def test_parse_opcode(opcode, initial_register, result_register):
-    assert result_register == parse_opcode(opcode, initial_register)
+def test_adjust_base(init_register, tape, result):
+    init_register["parameter1_mode"] = 1
+    d = list_to_defaultdict(tape)
+    t, r = adjust_base(d, init_register)
+    assert r["relative_base"] == result
+    assert r["instruction_pointer"] == 2
 
 
 @pytest.mark.parametrize(
     "tape, result",
     [
-        (
-            [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
-            [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
-        ),
-        ([1002, 4, 3, 4, 33], [1002, 4, 3, 4, 99],),
+        ([109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99], 99,),
+        ([104, 1125899906842624, 99], 1125899906842624,),
+        ([1102, 34915192, 34915192, 7, 4, 7, 99, 0], 1219070632396864,),
     ],
 )
 def test_process_tape(tape, result):
-    t, r = process_tape(tape, 1)
-    assert t == result
-
+    d = list_to_defaultdict(tape)
+    t, r = process_tape(d, [1])
+    # result_dict = list_to_defaultdict(result)
+    log.debug("output %s", r["output"])
+    assert r["output"] == result
