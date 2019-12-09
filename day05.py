@@ -58,22 +58,23 @@ def input_(tape, register):
 
 def output_(tape, register):
 
-    # output, _, _ = parse_parameters(tape, register)
-    instruction_pointer = register["instruction_pointer"]
-    output = tape[instruction_pointer + 1]
-    output = output if register["parameter1_mode"] else tape[output]
-    register["instruction_pointer"] += 2
+    output, _, _ = parse_parameters(tape, register)
+    # instruction_pointer = register["instruction_pointer"]
+    # output = tape[instruction_pointer + 1]
+    # output = output if register["parameter1_mode"] else tape[output]
     register["output"] = output
+    register["instruction_pointer"] += 2
     log.debug("Ouput: %s", output)
     return tape, register
 
 
 def jump_if_true(tape, register):
-    instruction_pointer = register["instruction_pointer"]
-    input1 = tape[instruction_pointer + 1]
-    input1 = input1 if register["parameter1_mode"] else tape[input1]
-    input2 = tape[instruction_pointer + 2]
-    input2 = input2 if register["parameter2_mode"] else tape[input2]
+    input1, input2, _ = parse_parameters(tape, register)
+    # instruction_pointer = register["instruction_pointer"]
+    # input1 = tape[instruction_pointer + 1]
+    # input1 = input1 if register["parameter1_mode"] else tape[input1]
+    # input2 = tape[instruction_pointer + 2]
+    # input2 = input2 if register["parameter2_mode"] else tape[input2]
     if input1:
         register["instruction_pointer"] = input2
     else:
@@ -82,11 +83,12 @@ def jump_if_true(tape, register):
 
 
 def jump_if_false(tape, register):
-    instruction_pointer = register["instruction_pointer"]
-    input1 = tape[instruction_pointer + 1]
-    input1 = input1 if register["parameter1_mode"] else tape[input1]
-    input2 = tape[instruction_pointer + 2]
-    input2 = input2 if register["parameter2_mode"] else tape[input2]
+    input1, input2, _ = parse_parameters(tape, register)
+    # instruction_pointer = register["instruction_pointer"]
+    # input1 = tape[instruction_pointer + 1]
+    # input1 = input1 if register["parameter1_mode"] else tape[input1]
+    # input2 = tape[instruction_pointer + 2]
+    # input2 = input2 if register["parameter2_mode"] else tape[input2]
     if not input1:
         register["instruction_pointer"] = input2
     else:

@@ -75,18 +75,14 @@ def test_parse_parameters(tape, register, result):
 
 
 @pytest.mark.parametrize(
-    "tape, register, result",
+    "tape, result",
     [
-        ([1, 0, 0, 0, 99], register, [2, 0, 0, 0, 99]),
-        (
-            [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
-            register,
-            [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
-        ),
+        ([1, 0, 0, 0, 99], [2, 0, 0, 0, 99]),
+        ([1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50], [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],),
     ],
 )
-def test_add(tape, register, result):
-    assert result, _ == add(tape, register)
+def test_add(init_register, tape, result):
+    assert result, _ == add(tape, init_register)
 
 
 @pytest.mark.parametrize(
@@ -106,24 +102,14 @@ def test_mult(tape, register, result):
 
 
 @pytest.mark.parametrize(
-    "tape, register, result",
-    [
-        (
-            [3, 0, 0, 3, 99],
-            dict(
-                instruction_pointer=0,
-                opcode=0,
-                parameter1_mode=0,
-                parameter2_mode=0,
-                parameter3_mode=0,
-                relative_base=0,
-            ),
-            [1, 0, 0, 3, 99],
-        ),
-    ],
+    "tape, result", [([3, 0, 0, 3, 99], [1, 0, 0, 3, 99],),],
 )
-def test_input_(tape, register, result):
-    assert result, _ == input_(tape, register, 1)
+def test_input_(init_register, tape, result):
+    init_register["input"] = 1
+    t, r = input_(tape, init_register)
+    assert t == result
+    assert r["instruction_pointer"] == 2
+    assert r["input"] == 1
 
 
 @pytest.mark.parametrize(
