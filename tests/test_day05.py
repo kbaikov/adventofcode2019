@@ -5,7 +5,7 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from day05 import add, mult, input_, output_, parse_opcode, process_tape
+from day05 import add, mult, input_, output_, parse_parameters, parse_opcode, process_tape
 
 register = dict(
     instruction_pointer=0,
@@ -15,6 +15,7 @@ register = dict(
     parameter3_mode=0,
     input=0,
     output=0,
+    relative_base=0,
 )
 register4 = dict(
     instruction_pointer=4,
@@ -24,7 +25,53 @@ register4 = dict(
     parameter3_mode=0,
     input=0,
     output=0,
+    relative_base=0,
 )
+
+
+@pytest.mark.parametrize(
+    "tape, register, result",
+    [
+        (
+            [1, 0, 0, 3, 99],
+            dict(
+                instruction_pointer=0,
+                opcode=0,
+                parameter1_mode=0,
+                parameter2_mode=0,
+                parameter3_mode=0,
+                relative_base=0,
+            ),
+            (1, 1, 3),
+        ),
+        (
+            [1, 0, 0, 3, 99],
+            dict(
+                instruction_pointer=0,
+                opcode=0,
+                parameter1_mode=1,
+                parameter2_mode=1,
+                parameter3_mode=1,
+                relative_base=0,
+            ),
+            (0, 0, 3),
+        ),
+        (
+            [1, 0, 0, 3, 99],
+            dict(
+                instruction_pointer=0,
+                opcode=0,
+                parameter1_mode=2,
+                parameter2_mode=2,
+                parameter3_mode=2,
+                relative_base=1,
+            ),
+            (0, 0, 99),
+        ),
+    ],
+)
+def test_parse_parameters(tape, register, result):
+    assert result == parse_parameters(tape, register)
 
 
 @pytest.mark.parametrize(
@@ -69,6 +116,7 @@ def test_mult(tape, register, result):
                 parameter1_mode=0,
                 parameter2_mode=0,
                 parameter3_mode=0,
+                relative_base=0,
             ),
             [1, 0, 0, 3, 99],
         ),
@@ -89,6 +137,7 @@ def test_input_(tape, register, result):
                 parameter1_mode=0,
                 parameter2_mode=0,
                 parameter3_mode=0,
+                relative_base=0,
             ),
             3,
         ),
@@ -100,6 +149,7 @@ def test_input_(tape, register, result):
                 parameter1_mode=0,
                 parameter2_mode=0,
                 parameter3_mode=0,
+                relative_base=0,
             ),
             99,
         ),
@@ -124,6 +174,7 @@ def test_output_(tape, register, result):
                 parameter3_mode=0,
                 input=0,
                 output=0,
+                relative_base=0,
             ),
         ),
         (
@@ -137,6 +188,7 @@ def test_output_(tape, register, result):
                 parameter3_mode=1,
                 input=0,
                 output=0,
+                relative_base=0,
             ),
         ),
         (
@@ -147,6 +199,7 @@ def test_output_(tape, register, result):
                 parameter1_mode=0,
                 parameter2_mode=0,
                 parameter3_mode=0,
+                relative_base=0,
             ),
             dict(
                 instruction_pointer=0,
@@ -154,6 +207,7 @@ def test_output_(tape, register, result):
                 parameter1_mode=0,
                 parameter2_mode=0,
                 parameter3_mode=0,
+                relative_base=0,
             ),
         ),
     ],
