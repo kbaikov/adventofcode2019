@@ -1,7 +1,7 @@
 # import logging
 
 # logging.basicConfig(
-#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("asdf.log")]
+#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
 # )
 
 # log = logging.getLogger(__name__)

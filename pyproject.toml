@@ -9,11 +9,12 @@ python = "^3.8"
 pytest-cov = "^2.8.1"
 anytree = "^2.7.2"
 numpy = "^1.17.4"
+matplotlib = "^3.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.1"
 black = "^19.10b0"
-coverage = "5.0b1"
+coverage = "5.0b2"
 
 [tool.coverage.run]
 branch = true
