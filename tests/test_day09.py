@@ -3,6 +3,8 @@ import os
 import logging
 from collections import defaultdict
 
+from test_day05 import list_to_defaultdict
+
 logging.basicConfig(
     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
 )
@@ -37,13 +39,6 @@ register4 = dict(
 )
 
 
-def list_to_defaultdict(l):
-    d = defaultdict(int)
-    for k, v in enumerate(l):
-        d[k] = v
-    return d
-
-
 @pytest.mark.parametrize(
     "tape, result", [([109, 19], 19),],
 )
@@ -67,5 +62,5 @@ def test_process_tape(tape, result):
     d = list_to_defaultdict(tape)
     t, r = process_tape(d, [1])
     # result_dict = list_to_defaultdict(result)
-    log.debug("output %s", r["output"])
+    # log.debug("output %s", r["output"])
     assert r["output"] == result

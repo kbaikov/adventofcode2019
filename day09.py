@@ -69,6 +69,8 @@ def process_tape(tape, input_list):
 
         parse_opcode(tape[register["instruction_pointer"]], register)
         opcode = register["opcode"]
+        log.debug("Current Output: %s", register["output"])
+        log.debug("Current OpCode: %s", register["opcode"])
         if opcode == 99:
             return tape, register
         else:
@@ -91,6 +93,4 @@ if __name__ == "__main__":
 
     tape = original_tape.copy()
     t, r = process_tape(tape, [1])
-    log.info("Final output: %s", r["output"])  #
-    # log.info("Final tape: %s", t)  #
-    log.info("Final register: %s", r)  #
+    log.info("Final output: %s", r["output"])  # 2714716640

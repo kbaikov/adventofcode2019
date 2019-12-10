@@ -28,7 +28,7 @@ def parse_parameters(tape, register):
     if register["parameter3_mode"] == 1:
         output = tape[output]
     elif register["parameter3_mode"] == 2:
-        output = tape[output + relative_base]
+        output = output + relative_base
 
     return input1, input2, output
 
@@ -49,8 +49,12 @@ def mult(tape, register):
 
 def input_(tape, register):
     instruction_pointer = register["instruction_pointer"]
-    input_value_position = tape[instruction_pointer + 1]
-    tape[input_value_position] = register["input"]
+    relative_base = register["relative_base"]
+    input1 = tape[instruction_pointer + 1]
+    if register["parameter1_mode"] == 0:
+        tape[input1] = register["input"]
+    elif register["parameter1_mode"] == 2:
+        tape[input1 + relative_base] = register["input"]
     log.debug("Input: %s", register["input"])
     register["instruction_pointer"] += 2
     return tape, register
@@ -64,7 +68,7 @@ def output_(tape, register):
     # output = output if register["parameter1_mode"] else tape[output]
     register["output"] = output
     register["instruction_pointer"] += 2
-    log.debug("Output: %s", output)
+    # log.debug("Output: %s", output)
     return tape, register
 
 

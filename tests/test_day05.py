@@ -1,5 +1,6 @@
 import sys
 import os
+from collections import defaultdict
 
 import pytest
 
@@ -27,6 +28,13 @@ register4 = dict(
     output=0,
     relative_base=0,
 )
+
+
+def list_to_defaultdict(l):
+    d = defaultdict(int)
+    for k, v in enumerate(l):
+        d[k] = v
+    return d
 
 
 @pytest.mark.parametrize(
@@ -66,7 +74,7 @@ register4 = dict(
                 parameter3_mode=2,
                 relative_base=1,
             ),
-            (0, 0, 99),
+            (0, 0, 4),
         ),
     ],
 )
@@ -213,6 +221,8 @@ def test_parse_opcode(opcode, initial_register, result_register):
     ],
 )
 def test_process_tape(tape, result):
-    t, r = process_tape(tape, 1)
-    assert t == result
+    d = list_to_defaultdict(tape)
+    t, r = process_tape(d, 1)
+    dr = list_to_defaultdict(result)
+    assert t == dr
 
