@@ -2,7 +2,7 @@ import logging
 from collections import defaultdict
 
 logging.basicConfig(
-    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
+    level=logging.INFO, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
 )
 
 log = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ def process_tape(tape, input_list):
         parameter2_mode=0,
         parameter3_mode=0,
         input_list=input_list,
-        input=1,
+        input=input_list[0],
         output=0,
         relative_base=0,
     )
@@ -77,10 +77,6 @@ def process_tape(tape, input_list):
             tape, register = operation[opcode](tape, register)
 
 
-def part1():
-    pass
-
-
 if __name__ == "__main__":
 
     with open("day09_input.txt") as f:
@@ -93,4 +89,8 @@ if __name__ == "__main__":
 
     tape = original_tape.copy()
     t, r = process_tape(tape, [1])
-    log.info("Final output: %s", r["output"])  # 2714716640
+    log.info("Part 1 final output: %s", r["output"])  # 2714716640
+
+    tape = original_tape.copy()
+    t, r = process_tape(tape, [2])
+    log.info("Part 2 final output: %s", r["output"])  # 58879
