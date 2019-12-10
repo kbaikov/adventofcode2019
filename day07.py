@@ -1,10 +1,12 @@
-# import logging
+import logging
+from copy import deepcopy
+from tests.test_day05 import list_to_defaultdict
 
-# logging.basicConfig(
-#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
-# )
+logging.basicConfig(
+    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
+)
 
-# log = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 from itertools import permutations
 
@@ -49,6 +51,7 @@ def process_tape(tape, input_list):
         parameter3_mode=0,
         input_list=input_list,
         output=0,
+        relative_base=0,
     )
     while True:
 
@@ -60,18 +63,23 @@ def process_tape(tape, input_list):
             tape, register = operation[opcode](tape, register)
 
 
-def part1():
-    pass
+def process_tape2(tape, register):
+    while True:
+
+        parse_opcode(tape[register["instruction_pointer"]], register)
+        opcode = register["opcode"]
+        if opcode == 99:
+            return tape, register
+        if opcode == 4:
+            tape, register = operation[opcode](tape, register)
+            return tape, register
+        else:
+            tape, register = operation[opcode](tape, register)
 
 
-if __name__ == "__main__":
-
-    with open("day07_input.txt") as f:
-        original_tape = [int(x) for x in f.readline().split(",")]
-
+def part1(tape):
     max_signal = dict()
     for permutation in permutations(range(5), 5):
-        tape = original_tape.copy()
         signal = 0
         for phase in permutation:
             input_list = [signal, phase]  # input signal, phase
@@ -79,4 +87,46 @@ if __name__ == "__main__":
             signal = r["output"]
         max_signal[permutation] = signal
     max_key_by_value = sorted(max_signal.items(), key=lambda x: x[1])
-    print(max_key_by_value[-1])  # ((2, 1, 3, 4, 0), 199988)
+    return max_key_by_value[-1][1]  # ((2, 1, 3, 4, 0), 199988)
+
+
+def part2(tape):
+    register = dict(
+        instruction_pointer=0,
+        opcode=0,
+        parameter1_mode=0,
+        parameter2_mode=0,
+        parameter3_mode=0,
+        input_list=[0],
+        output=0,
+        relative_base=0,
+    )
+    max_signal = dict()
+    for permutation in permutations(range(5, 10), 5):
+        signal = 0
+        amps = {s: [tape.copy(), deepcopy(register)] for s in "ABCDE"}
+        amps["A"][1]["input_list"].append(permutation[0])
+        amps["B"][1]["input_list"].append(permutation[1])
+        amps["C"][1]["input_list"].append(permutation[2])
+        amps["D"][1]["input_list"].append(permutation[3])
+        amps["E"][1]["input_list"].append(permutation[4])
+
+        for amplifier, (tape, register) in amps.items():
+            register["input_list"].insert(0, signal)
+            t, r = process_tape2(tape, register)
+            # tape, register = t, r
+            # input_list = [signal, phase]  # input signal, phase
+            signal = r["output"]
+        max_signal[permutation] = signal
+    max_key_by_value = sorted(max_signal.items(), key=lambda x: x[1])
+    return max_key_by_value[-1][1]  # ((2, 1, 3, 4, 0), 199988)
+
+
+if __name__ == "__main__":
+
+    with open("day07_input.txt") as f:
+        original_tape = [int(x) for x in f.readline().split(",")]
+
+    t = list_to_defaultdict(original_tape)
+    # log.info("Part 1 solution: %s", part1(original_tape))  # 199988
+    log.info("Part 2 solution: %s", part2(t))  #
