@@ -91,33 +91,36 @@ def part1(tape):
 
 
 def part2(tape):
-    register = dict(
-        instruction_pointer=0,
-        opcode=0,
-        parameter1_mode=0,
-        parameter2_mode=0,
-        parameter3_mode=0,
-        input_list=[0],
-        output=0,
-        relative_base=0,
-    )
     max_signal = dict()
     for permutation in permutations(range(5, 10), 5):
+        register = dict(
+            instruction_pointer=0,
+            opcode=0,
+            parameter1_mode=0,
+            parameter2_mode=0,
+            parameter3_mode=0,
+            input_list=[],
+            output=0,
+            relative_base=0,
+        )
         signal = 0
         amps = {s: [tape.copy(), deepcopy(register)] for s in "ABCDE"}
-        amps["A"][1]["input_list"].append(permutation[0])
-        amps["B"][1]["input_list"].append(permutation[1])
-        amps["C"][1]["input_list"].append(permutation[2])
-        amps["D"][1]["input_list"].append(permutation[3])
-        amps["E"][1]["input_list"].append(permutation[4])
+        amps["A"][1]["input_list"] = [permutation[0]]
+        amps["B"][1]["input_list"] = [permutation[1]]
+        amps["C"][1]["input_list"] = [permutation[2]]
+        amps["D"][1]["input_list"] = [permutation[3]]
+        amps["E"][1]["input_list"] = [permutation[4]]
 
-        for amplifier, (tape, register) in amps.items():
-            register["input_list"].insert(0, signal)
-            t, r = process_tape2(tape, register)
-            # tape, register = t, r
-            # input_list = [signal, phase]  # input signal, phase
-            signal = r["output"]
-        max_signal[permutation] = signal
+        while amps["E"][1]["opcode"] != 99:
+            for amplifier, (tape, register) in amps.items():
+                register["input_list"].insert(0, signal)
+                t, r = process_tape2(tape, register)
+                # tape, register = t, r
+                # input_list = [signal, phase]  # input signal, phase
+                signal = r["output"]
+            signal = amps["E"][1]["output"]
+        max_signal[permutation] = amps["E"][1]["output"]
+
     max_key_by_value = sorted(max_signal.items(), key=lambda x: x[1])
     return max_key_by_value[-1][1]  # ((2, 1, 3, 4, 0), 199988)
 
@@ -129,4 +132,4 @@ if __name__ == "__main__":
 
     t = list_to_defaultdict(original_tape)
     # log.info("Part 1 solution: %s", part1(original_tape))  # 199988
-    log.info("Part 2 solution: %s", part2(t))  #
+    log.info("Part 2 solution: %s", part2(t))  # 17519904 not 1153638 not 2286232 not 2343436
