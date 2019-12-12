@@ -2,7 +2,7 @@
 name = "adventofcode2019"
 version = "0.1.0"
 description = ""
-authors = ["Konstantin Baikov <konstantin.baikov.ext@siemens-healthineers.com>"]
+authors = ["Konstantin Baikov"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
