@@ -8,11 +8,11 @@
 
 import numpy as np
 import re
-from itertools import combinations
+from itertools import permutations
 
 
 def step_gravity(p, v):
-    for p1, p2 in list(combinations(p, 2)):
+    for p1, p2 in list(permutations(p, 2)):
         if p1[0] > p2[0]:
             pass
 
