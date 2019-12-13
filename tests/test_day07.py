@@ -38,6 +38,13 @@ def test_part1_final_result():
     assert part1(original_tape) == 199988
 
 
+def test_part2_final_result():
+    with open("day07_input.txt") as f:
+        original_tape = [int(x) for x in f.readline().split(",")]
+    t = list_to_defaultdict(original_tape)
+    assert part2(t) == 17519904
+
+
 @pytest.mark.parametrize(
     "tape, result",
     [
