@@ -6,15 +6,18 @@
 
 # log = logging.getLogger(__name__)
 
-import numpy as np
 import re
 from itertools import permutations
+from pathlib import Path
+import numpy as np
 
 
 def step_gravity(p, v):
     for p1, p2 in list(permutations(p, 2)):
-        if p1[0] > p2[0]:
-            pass
+        velocity_index = np.where(p1 == p)
+        v_change = np.select([p1 < p2, p1 > p2, p2 == p2], [1, -1, 0])
+        v[velocity_index[0][0]] += v_change
+    return p, v
 
 
 def step_velocity(p, v):
@@ -25,8 +28,8 @@ def total_energy(p, v):
     return np.sum(np.sum(np.abs(p), axis=1) * np.sum(np.abs(v), axis=1))
 
 
-def part1(p, v, n=None):
-    number_of_steps = n or 10
+def part1(p, v, n=10):
+    number_of_steps = n
     for step in range(number_of_steps):
         p, v = step_gravity(p, v)
         p, v = step_velocity(p, v)
@@ -39,10 +42,9 @@ def part2(array):
 
 if __name__ == "__main__":
 
-    with open("day12_input.txt") as f:
-        # find only numbers in the file read as string
-        pos = np.fromiter(re.findall("[0-9]{1,2}", f.read()), dtype=np.int).reshape(4, 3)
-
+    path = Path() / "day12_input.txt"
+    f = path.read_text(encoding="utf-8")
+    pos = np.fromiter(re.findall("[0-9]{1,2}", f), dtype=np.int).reshape(4, 3)
     vel = np.zeros((4, 3), dtype=np.int)
-    print(pos, vel)  #
+    print(part1(pos, vel, 1000))  # not 1343490 not 34804
     # part2(array)  #

@@ -7,7 +7,7 @@ import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-from day12 import total_energy, step_velocity, step_gravity
+from day12 import total_energy, step_velocity, step_gravity, part1
 
 
 @pytest.mark.parametrize(
@@ -45,25 +45,25 @@ def test_step_velocity(pos, vel, result):
 
 
 @pytest.mark.parametrize(
-    "pos, vel, result",
-    [
-        (
-            "2 1 -3 1 -8 0 3 6 1 2 0 4",
-            "-3 -2 1 -1 1 3 3 2 -3 1 -1 -1",
-            "-1 -1 -2 0 -7 3 6 8 -2 3 -1 3",
-        ),
-    ],
+    "pos, vel_result", [("-1 0 2 2 -10 -7 4 -8 8 3 5 -1", "3 -1 -1 1 3 3 -3 1 -3 -1 -3 1",),],
 )
-def test_step_gravity(pos, vel, result):
+def test_step_gravity(pos, vel_result):
     p = np.fromstring(pos, dtype=np.int, sep=" ").reshape(4, 3)
-    v = np.fromstring(vel, dtype=np.int, sep=" ").reshape(4, 3)
-    r = np.fromstring(result, dtype=np.int, sep=" ").reshape(4, 3)
+    v = np.zeros((4, 3), dtype=np.int)
+    r = np.fromstring(vel_result, dtype=np.int, sep=" ").reshape(4, 3)
 
     new_p, new_v = step_gravity(p, v)
 
-    assert np.array_equal(new_p, r)
+    assert np.array_equal(new_v, r)
 
 
-def test_part1():
-    pass
+@pytest.mark.parametrize(
+    "pos, steps, total_energy",
+    [("-1 0 2 2 -10 -7 4 -8 8 3 5 -1", 10, 179,), ("-8 -10 0 5 5 10 2 -7 3 9 -8 -3", 100, 1940,),],
+)
+def test_part1(pos, steps, total_energy):
+    p = np.fromstring(pos, dtype=np.int, sep=" ").reshape(4, 3)
+    v = np.zeros((4, 3), dtype=np.int)
+
+    assert part1(p, v, steps) == total_energy
 
