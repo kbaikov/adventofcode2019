@@ -7,7 +7,7 @@ import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-from day12 import total_energy, step_velocity, step_gravity, part1
+from day12 import total_energy, step_velocity, step_gravity, part1, part2
 
 
 @pytest.mark.parametrize(
@@ -70,4 +70,15 @@ def test_part1(pos, steps, total_energy):
     v = np.zeros((4, 3), dtype=np.int)
 
     assert part1(p, v, steps) == total_energy
+
+
+@pytest.mark.parametrize(
+    "pos, steps",
+    [("-1 0 2 2 -10 -7 4 -8 8 3 5 -1", 2772,), ("-8 -10 0 5 5 10 2 -7 3 9 -8 -3", 4_686_774_924,),],
+)
+def test_part2(pos, steps):
+    p = np.fromstring(pos, dtype=np.int, sep=" ").reshape(4, 3)
+    v = np.zeros((4, 3), dtype=np.int)
+
+    assert part2(p, v) == steps
 
