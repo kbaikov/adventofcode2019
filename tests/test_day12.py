@@ -59,7 +59,11 @@ def test_step_gravity(pos, vel_result):
 
 @pytest.mark.parametrize(
     "pos, steps, total_energy",
-    [("-1 0 2 2 -10 -7 4 -8 8 3 5 -1", 10, 179,), ("-8 -10 0 5 5 10 2 -7 3 9 -8 -3", 100, 1940,),],
+    [
+        ("-1 0 2 2 -10 -7 4 -8 8 3 5 -1", 10, 179,),
+        ("-8 -10 0 5 5 10 2 -7 3 9 -8 -3", 100, 1940,),
+        ("-1 0 2 2 -10 -7 4 -8 8 3 5 -1", 1, 229,),
+    ],
 )
 def test_part1(pos, steps, total_energy):
     p = np.fromstring(pos, dtype=np.int, sep=" ").reshape(4, 3)
