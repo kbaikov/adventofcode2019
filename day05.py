@@ -55,7 +55,7 @@ def input_(tape, register):
         tape[input1] = register["input"]
     elif register["parameter1_mode"] == 2:
         tape[input1 + relative_base] = register["input"]
-    log.debug("Input: %s", register["input"])
+    # log.debug("Input: %s", register["input"])
     register["instruction_pointer"] += 2
     return tape, register
 

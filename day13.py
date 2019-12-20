@@ -4,7 +4,7 @@ from collections import defaultdict
 import numpy as np
 
 logging.basicConfig(
-    level=logging.INFO, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
+    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
 )
 
 log = logging.getLogger(__name__)
@@ -74,6 +74,34 @@ def process_tape(tape, input_list):
             tape, register = operation[opcode](tape, register)
 
 
+def part2(tape):
+    tape[0] = 2
+    inp = 2
+    while True:
+        t, r = process_tape(tape, [inp])
+        output_array = np.array(r["output"], dtype=np.int).reshape(-1, 3)
+
+        picture = np.zeros((101, 101), dtype=np.int)
+        for sequence in output_array:
+            x, y, symbol = sequence
+            if x == -1 and y == 0:
+                current_score = symbol
+                continue
+            picture[x][y] = symbol
+        log.debug("Current score: %s", current_score)
+        paddle, _ = np.where(picture == 3)
+        ball, _ = np.where(picture == 4)
+        paddle = paddle[0]
+        ball = ball[0]
+
+        if ball < paddle:
+            inp = -1
+        elif ball > paddle:
+            inp = 1
+        else:
+            inp = 0
+
+
 if __name__ == "__main__":
 
     with open("day13_input.txt") as f:
@@ -93,5 +121,7 @@ if __name__ == "__main__":
         x, y, symbol = sequence
         picture[x][y] = symbol
 
-    print(np.sum(picture == 2))  # 341
+    log.info("Part1 solution: %s", np.sum(picture == 2))  # 341
+    tape = original_tape.copy()
+    log.info("Part2 solution: %s", part2(tape))  #
 
