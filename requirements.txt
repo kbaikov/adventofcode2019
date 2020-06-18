@@ -1,5 +1,6 @@
 anytree
 matplotlib
 numpy
+pillow
 pytest
 pytest-cov
