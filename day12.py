@@ -38,7 +38,7 @@ def part1(p, v, n=10):
     return total_energy(p, v)
 
 
-def part2(array):
+def part2(p, v):
     pass
 
 
