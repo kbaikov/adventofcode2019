@@ -1,9 +1,9 @@
 import logging
 from collections import defaultdict
 
-logging.basicConfig(
-    level=logging.INFO, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
-)
+# logging.basicConfig(
+#     level=logging.INFO, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
+# )
 
 log = logging.getLogger(__name__)
 

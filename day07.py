@@ -2,9 +2,9 @@ import logging
 from copy import deepcopy
 from tests.test_day05 import list_to_defaultdict
 
-logging.basicConfig(
-    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
-)
+# logging.basicConfig(
+#     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
+# )
 
 log = logging.getLogger(__name__)
 
@@ -132,4 +132,6 @@ if __name__ == "__main__":
 
     t = list_to_defaultdict(original_tape)
     # log.info("Part 1 solution: %s", part1(original_tape))  # 199988
-    log.info("Part 2 solution: %s", part2(t))  # 17519904 not 1153638 not 2286232 not 2343436
+    log.info(
+        "Part 2 solution: %s", part2(t)
+    )  # 17519904 not 1153638 not 2286232 not 2343436
