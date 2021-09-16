@@ -1,7 +1,6 @@
-import sys
 import os
+import sys
 
-import pytest
 import numpy as np
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -24,4 +23,3 @@ def test_part1():
     with open("day08_input.txt") as f:
         array = np.fromiter(f.readline().rstrip(), dtype=np.int)
     assert part1(array) == 1206
-

@@ -1,5 +1,6 @@
 import logging
 from copy import deepcopy
+
 from tests.test_day05 import list_to_defaultdict
 
 # logging.basicConfig(
@@ -12,12 +13,12 @@ from itertools import permutations
 
 from day05 import (
     add,
+    equals,
+    jump_if_false,
+    jump_if_true,
+    less_than,
     mult,
     output_,
-    jump_if_true,
-    jump_if_false,
-    less_than,
-    equals,
     parse_opcode,
 )
 

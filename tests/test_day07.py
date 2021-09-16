@@ -1,12 +1,13 @@
-import sys
 import os
+import sys
 
 import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from test_day05 import list_to_defaultdict
-from day07 import part1, part2, input_
+
+from day07 import input_, part1, part2
 
 
 @pytest.mark.parametrize(
@@ -48,7 +49,10 @@ def test_part2_final_result():
 @pytest.mark.parametrize(
     "tape, result",
     [
-        ([3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0], 43210,),
+        (
+            [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0],
+            43210,
+        ),
         (
             [
                 3,
@@ -230,4 +234,3 @@ def test_part1_params(tape, result):
 def test_part2_params(tape, result):
     t = list_to_defaultdict(tape)
     assert part2(t) == result
-

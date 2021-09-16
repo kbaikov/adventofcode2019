@@ -4,7 +4,8 @@ from collections import defaultdict
 import numpy as np
 
 logging.basicConfig(
-    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
+    level=logging.DEBUG,
+    handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
 )
 
 log = logging.getLogger(__name__)
@@ -12,16 +13,15 @@ log = logging.getLogger(__name__)
 
 from day05 import (
     add,
-    mult,
-    input_,
-    jump_if_true,
-    jump_if_false,
-    less_than,
     equals,
+    input_,
+    jump_if_false,
+    jump_if_true,
+    less_than,
+    mult,
     parse_opcode,
     parse_parameters,
 )
-
 from day09 import adjust_base
 
 
@@ -124,4 +124,3 @@ if __name__ == "__main__":
     log.info("Part1 solution: %s", np.sum(picture == 2))  # 341
     tape = original_tape.copy()
     log.info("Part2 solution: %s", part2(tape))  #
-

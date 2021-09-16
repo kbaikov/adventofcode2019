@@ -7,8 +7,8 @@
 # log = logging.getLogger(__name__)
 
 import re
-from itertools import permutations
 from pathlib import Path
+
 import numpy as np
 
 

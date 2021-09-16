@@ -18,8 +18,8 @@ def fuel_required_recursive(mass):
 if __name__ == "__main__":
 
     with open("day01_input.txt") as f:
-        part1_result = sum([fuel_required(int(x)) for x in f])
+        part1_result = sum(fuel_required(int(x)) for x in f)
         f.seek(0)
-        part2_result = sum([fuel_required_recursive(int(x)) for x in f])
+        part2_result = sum(fuel_required_recursive(int(x)) for x in f)
 
     print(part1_result, part2_result)  # 3278434 4914785

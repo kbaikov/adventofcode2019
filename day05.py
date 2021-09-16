@@ -2,7 +2,8 @@ import logging
 from collections import defaultdict
 
 logging.basicConfig(
-    level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
+    level=logging.DEBUG,
+    handlers=[logging.StreamHandler(), logging.FileHandler("log.log")],
 )
 
 log = logging.getLogger(__name__)
@@ -124,7 +125,9 @@ def parse_opcode(opcode_number, register):
     """Parse the opcode_number and update the register accordingly"""
     params, _, opcode = str(opcode_number).rpartition("0")
     register["opcode"] = int(str(opcode_number)[-2:])
-    register["parameter1_mode"] = register["parameter2_mode"] = register["parameter3_mode"] = 0
+    register["parameter1_mode"] = register["parameter2_mode"] = register[
+        "parameter3_mode"
+    ] = 0
     if params:
         register["parameter1_mode"] = int(params[-1])
         try:
@@ -187,4 +190,3 @@ if __name__ == "__main__":
     tape = original_tape.copy()
     t, r = process_tape(tape, 5)
     log.info("Final output: %s", r["output"])  # 742621
-

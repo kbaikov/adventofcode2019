@@ -1,7 +1,6 @@
-import sys
-import os
 import logging
-from collections import defaultdict
+import os
+import sys
 
 from test_day05 import list_to_defaultdict
 
@@ -15,7 +14,7 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from day09 import add, mult, input_, output_, parse_opcode, process_tape, adjust_base
+from day09 import adjust_base, process_tape
 
 register = dict(
     instruction_pointer=0,
@@ -40,7 +39,10 @@ register4 = dict(
 
 
 @pytest.mark.parametrize(
-    "tape, result", [([109, 19], 19),],
+    "tape, result",
+    [
+        ([109, 19], 19),
+    ],
 )
 def test_adjust_base(init_register, tape, result):
     init_register["parameter1_mode"] = 1
@@ -57,8 +59,14 @@ def test_adjust_base(init_register, tape, result):
             [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99],
             99,
         ),
-        ([104, 1125899906842624, 99], 1125899906842624,),
-        ([1102, 34915192, 34915192, 7, 4, 7, 99, 0], 1219070632396864,),
+        (
+            [104, 1125899906842624, 99],
+            1125899906842624,
+        ),
+        (
+            [1102, 34915192, 34915192, 7, 4, 7, 99, 0],
+            1219070632396864,
+        ),
     ],
 )
 def test_process_tape(tape, result):

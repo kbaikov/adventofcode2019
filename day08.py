@@ -4,12 +4,10 @@
 #     level=logging.DEBUG, handlers=[logging.StreamHandler(), logging.FileHandler("log.log")]
 # )
 
-# log = logging.getLogger(__name__)
-import numpy as np
 import matplotlib.pyplot as plt
 
-import mpl_toolkits.mplot3d
-from PIL import Image
+# log = logging.getLogger(__name__)
+import numpy as np
 
 
 def select_visible(a):

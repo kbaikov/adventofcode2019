@@ -1,12 +1,20 @@
-import sys
 import os
+import sys
 from collections import defaultdict
 
 import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from day05 import add, mult, input_, output_, parse_parameters, parse_opcode, process_tape
+from day05 import (
+    add,
+    input_,
+    mult,
+    output_,
+    parse_opcode,
+    parse_parameters,
+    process_tape,
+)
 
 register = dict(
     instruction_pointer=0,
@@ -86,7 +94,10 @@ def test_parse_parameters(tape, register, result):
     "tape, result",
     [
         ([1, 0, 0, 0, 99], [2, 0, 0, 0, 99]),
-        ([1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50], [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],),
+        (
+            [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
+            [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
+        ),
     ],
 )
 def test_add(init_register, tape, result):
@@ -110,7 +121,13 @@ def test_mult(tape, register, result):
 
 
 @pytest.mark.parametrize(
-    "tape, result", [([3, 0, 0, 3, 99], [1, 0, 0, 3, 99],),],
+    "tape, result",
+    [
+        (
+            [3, 0, 0, 3, 99],
+            [1, 0, 0, 3, 99],
+        ),
+    ],
 )
 def test_input_(init_register, tape, result):
     init_register["input"] = 1
@@ -217,7 +234,10 @@ def test_parse_opcode(opcode, initial_register, result_register):
             [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
             [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
         ),
-        ([1002, 4, 3, 4, 33], [1002, 4, 3, 4, 99],),
+        (
+            [1002, 4, 3, 4, 33],
+            [1002, 4, 3, 4, 99],
+        ),
     ],
 )
 def test_process_tape(tape, result):
@@ -225,4 +245,3 @@ def test_process_tape(tape, result):
     t, r = process_tape(d, 1)
     dr = list_to_defaultdict(result)
     assert t == dr
-

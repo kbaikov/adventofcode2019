@@ -1,25 +1,52 @@
-import sys
 import os
+import sys
 
 import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from day03 import process_directions, closest_intersection_distance, part1, part2
+from day03 import closest_intersection_distance, part1, part2, process_directions
 
 
 @pytest.mark.parametrize(
     "steps, result",
     [
-        (["R1"], [(0, 0), (1, 0)],),
-        (["R3"], [(0, 0), (1, 0), (2, 0), (3, 0)],),
-        (["L1"], [(0, 0), (-1, 0)],),
-        (["L3"], [(0, 0), (-1, 0), (-2, 0), (-3, 0)],),
-        (["U1"], [(0, 0), (0, 1)],),
-        (["U3"], [(0, 0), (0, 1), (0, 2), (0, 3)],),
-        (["D1"], [(0, 0), (0, -1)],),
-        (["D3"], [(0, 0), (0, -1), (0, -2), (0, -3)],),
-        (["R1", "U1", "L1", "D1"], [(0, 0), (1, 0), (1, 1), (0, 1), (0, 0)],),
+        (
+            ["R1"],
+            [(0, 0), (1, 0)],
+        ),
+        (
+            ["R3"],
+            [(0, 0), (1, 0), (2, 0), (3, 0)],
+        ),
+        (
+            ["L1"],
+            [(0, 0), (-1, 0)],
+        ),
+        (
+            ["L3"],
+            [(0, 0), (-1, 0), (-2, 0), (-3, 0)],
+        ),
+        (
+            ["U1"],
+            [(0, 0), (0, 1)],
+        ),
+        (
+            ["U3"],
+            [(0, 0), (0, 1), (0, 2), (0, 3)],
+        ),
+        (
+            ["D1"],
+            [(0, 0), (0, -1)],
+        ),
+        (
+            ["D3"],
+            [(0, 0), (0, -1), (0, -2), (0, -3)],
+        ),
+        (
+            ["R1", "U1", "L1", "D1"],
+            [(0, 0), (1, 0), (1, 1), (0, 1), (0, 0)],
+        ),
     ],
 )
 def test_process_directions(steps, result):
@@ -27,7 +54,10 @@ def test_process_directions(steps, result):
 
 
 @pytest.mark.parametrize(
-    "c1, c2, result", [([(0, 0), (1, 0), (2, 0), (3, 0)], [(0, 0), (1, 0)], 1),],
+    "c1, c2, result",
+    [
+        ([(0, 0), (1, 0), (2, 0), (3, 0)], [(0, 0), (1, 0)], 1),
+    ],
 )
 def test_closest_intersection_distance(c1, c2, result):
     assert result == closest_intersection_distance(c1, c2)

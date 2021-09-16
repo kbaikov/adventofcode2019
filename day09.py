@@ -10,15 +10,14 @@ log = logging.getLogger(__name__)
 
 from day05 import (
     add,
+    equals,
+    input_,
+    jump_if_false,
+    jump_if_true,
+    less_than,
     mult,
     output_,
-    input_,
-    jump_if_true,
-    jump_if_false,
-    less_than,
-    equals,
     parse_opcode,
-    parse_parameters,
 )
 
 

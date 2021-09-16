@@ -1,4 +1,4 @@
-from anytree import Node, RenderTree, Walker
+from anytree import Node, Walker
 
 # import logging
 
@@ -46,4 +46,3 @@ if __name__ == "__main__":
     print(dir(root))
     print(part1(root))  # 273985
     print(part2(globals()["YOU"], globals()["SAN"]))  # 460
-
